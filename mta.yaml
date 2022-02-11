@@ -1,70 +1,72 @@
-## Generated mta.yaml based on template version 0.4.0
-## appName = WellCompletion
-## language=java; multitenant=false
-## approuter=
 _schema-version: '3.1'
 ID: WellCompletion
+description: WellCompletion application
 version: 1.0.0-SNAPSHOT
-description: "WellCompletion application"
+modules:
+  - name: WellCompletion-srv
+    type: java
+    path: srv
+    properties:
+      SPRING_PROFILES_ACTIVE: cloud
+    requires:
+      - name: WellCompletion-db
+      - name: uaa_WellCompletion
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: '${default-url}'
+    build-parameters:
+      build-result: 'target/*-exec.[wj]ar'
+      builder: custom
+      commands:
+        - mvn clean package
+  - name: WellCompletion-db-deployer
+    type: hdb
+    path: db
+    requires:
+      - name: WellCompletion-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: wellcompletion-approuter
+    type: approuter.nodejs
+    path: wellcompletion-approuter
+    requires:
+      - name: WellCompletion_html_repo_runtime
+      - name: uaa_WellCompletion
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api
+          url: '~{srv-url}'
+          forwardAuthToken: true
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+resources:
+  - name: WellCompletion-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: '${service-name}'
+  - name: uaa_WellCompletion
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-name: WellCompletion-xsuaa-service
+      service-plan: application
+  - name: WellCompletion_html_repo_runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
 parameters:
   enable-parallel-deployments: true
-   
 build-parameters:
   before-all:
-   - builder: custom
-     commands:
-      - npm install --production
-      - npx -p @sap/cds-dk cds build --production
-
-modules:
- # --------------------- SERVER MODULE ------------------------
- - name: WellCompletion-srv
- # ------------------------------------------------------------
-   type: java
-   path: srv
-   properties:
-     SPRING_PROFILES_ACTIVE: cloud
-   build-parameters:
-     builder: custom
-     commands: [ mvn clean package ]
-     build-result: "target/*-exec.[wj]ar"
-   requires:
-    # Resources extracted from CAP configuration
-    - name: WellCompletion-db
-    - name: uaa_WellCompletion
-   provides:
-    - name: srv-api      # required by consumers of CAP services (e.g. approuter)
-      properties:
-        srv-url: ${default-url}
-
- # -------------------- SIDECAR MODULE ------------------------
- - name: WellCompletion-db-deployer
- # ------------------------------------------------------------
-   type: hdb
-   path: db  
-   parameters:
-     buildpack: nodejs_buildpack
-   requires:
-    # 'hana' and 'xsuaa' resources extracted from CAP configuration
-    - name: WellCompletion-db
-
-
-resources:
- # services extracted from CAP configuration
- # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
-# ------------------------------------------------------------
- - name: WellCompletion-db
-# ------------------------------------------------------------
-   type: com.sap.xs.hdi-container
-   parameters:
-     service: hana  # or 'hanatrial' on trial landscapes
-     service-plan: hdi-shared
-   properties:
-     hdi-service-name: ${service-name}
-
- - name: uaa_WellCompletion
-   type: org.cloudfoundry.managed-service
-   parameters:
-      path: ./xs.security.json
-      service: xsuaa
-      service-plan: application
+    - builder: custom
+      commands:
+        - npm install --production
+        - npx -p @sap/cds-dk cds build --production

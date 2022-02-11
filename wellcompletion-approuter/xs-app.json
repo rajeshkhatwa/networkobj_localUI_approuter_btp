@@ -1,0 +1,13 @@
+{
+  "authenticationMethod": "route",
+  "routes": [
+      {
+
+    "source" : "/odata/v4/MasterDataService/(.*)",
+    "destination" : "srv-api",
+    "csrfProtection": true,
+    "authenticationType": "xsuaa"
+
+      }
+  ]
+}

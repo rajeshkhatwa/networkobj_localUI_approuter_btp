@@ -20,8 +20,8 @@
       }
     },
     "uaa": {
-        "kind": "xsuaa",
-        "credentials": {}
-      }
+      "kind": "xsuaa",
+      "credentials": {}
+    }
   }
 }
