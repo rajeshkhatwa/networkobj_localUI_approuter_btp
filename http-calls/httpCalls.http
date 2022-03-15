@@ -3,6 +3,10 @@
 ###
 GET http://localhost:8080/odata/v4/MasterDataService/NetworkObjectTypes
 
+###
+
+GET http://localhost:8080/odata/v4/MasterDataService/NetworkObjects
+
 
 ###
 GET http://localhost:8080/odata/v4/MasterDataService/ProdNetworks

@@ -11,6 +11,7 @@ modules:
     requires:
       - name: WellCompletion-db
       - name: uaa_WellCompletion
+      - name: WellCompletionApplicationLog
     provides:
       - name: srv-api
         properties:
@@ -33,6 +34,7 @@ modules:
     requires:
       - name: WellCompletion_html_repo_runtime
       - name: uaa_WellCompletion
+      - name: WellCompletionApplicationLog
       - name: srv-api
         group: destinations
         properties:
@@ -57,6 +59,13 @@ resources:
       service: xsuaa
       service-name: WellCompletion-xsuaa-service
       service-plan: application
+
+  - name: WellCompletionApplicationLog
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: lite   
+
   - name: WellCompletion_html_repo_runtime
     type: org.cloudfoundry.managed-service
     parameters:

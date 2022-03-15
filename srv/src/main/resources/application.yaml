@@ -1,4 +1,7 @@
 ---
+logging:
+ level:
+    com.sap.cds.security.authentication: DEBUG
 spring:
   web.resources.static-locations: "file:./app/webapp"
   config.activate.on-profile: default
@@ -21,6 +24,8 @@ cds:
     password: user
     roles: 
     - Viewer
+    - MediumAdmin
+    - MasterDataAdmin
     attributes:
      countryassigned: [DE, UK]
     additional: 

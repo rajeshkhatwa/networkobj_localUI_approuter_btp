@@ -1,4 +1,9 @@
 ---
+logging:
+ level:
+    com.sap.cds.security.authentication: DEBUG
+    com.sap.cds.security.authorization: DEBUG
+    
 spring:
   web.resources.static-locations: "file:./app/webapp"
   config.activate.on-profile: cloud

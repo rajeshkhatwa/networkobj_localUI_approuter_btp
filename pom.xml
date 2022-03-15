@@ -45,6 +45,11 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+            <dependency>
+	            <groupId>com.sap.hcp.cf.logging</groupId>
+	            <artifactId>cf-java-logging-support-logback</artifactId>
+	            <version>${logging.support.version}</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 

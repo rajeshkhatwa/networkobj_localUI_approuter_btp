@@ -43,6 +43,11 @@ annotate MasterDataService.NetworkObjects with @( restrict: [
   { grant: ['READ','WRITE'], where: 'country_code = $user.countryassigned' },
 ]);
 
+annotate MasterDataService.Mediums with @( restrict: [
+  { grant: ['READ','WRITE'], to: 'MediumAdmin'},
+
+]);
+
 
 annotate MasterDataService.NetworkObjects with @(UI : {
     HeaderInfo        : {

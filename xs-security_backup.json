@@ -1,11 +1,7 @@
 {
-  "xsappname": "WellCompletioncds",
+  "xsappname": "srv",
   "tenant-mode": "dedicated",
   "scopes": [
-    {
-      "name": "$XSAPPNAME.MediumAdmin",
-      "description": "MediumAdmin"
-    },
     {
       "name": "$XSAPPNAME.MasterDataAdmin",
       "description": "MasterDataAdmin"
@@ -16,30 +12,22 @@
       "name": "countryassigned",
       "description": "countryassigned",
       "valueType": "s",
-      "valueRequired": true
+      "valueRequired": false
     }
   ],
   "role-templates": [
     {
-      "name": "MediumAdmin",
-      "description": "Medium Administrator",
-      "scope-references": [
-        "$XSAPPNAME.MediumAdmin"
-      ],
-      "attribute-references": []
-    },
-    {
       "name": "MasterDataAdmin",
-      "description": "Master Data Administrator",
+      "description": "generated",
       "scope-references": [
         "$XSAPPNAME.MasterDataAdmin"
       ],
       "attribute-references": []
     },
     {
-      "name": "userCountry",
-      "description": "User Specific Countries",
-      "default-role-name": "userCountry",
+      "name": "userattributes",
+      "description": "generated",
+      "default-role-name": "Attributes of a User",
       "scope-references": [],
       "attribute-references": [
         "countryassigned"

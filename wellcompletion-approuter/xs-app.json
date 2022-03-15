@@ -6,6 +6,7 @@
     "source" : "/odata/v4/MasterDataService/(.*)",
     "destination" : "srv-api",
     "csrfProtection": true,
+    "cacheControl": "no-cache, no-store, must-revalidate",
     "authenticationType": "xsuaa"
 
       }
